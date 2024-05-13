@@ -3,13 +3,49 @@ import { useEffect, useState, useRef } from "react";
 import { ScrollTrigger } from "gsap/all";
 import { gsap } from "gsap";
 import Heading from "../ui/Heading";
+import emailjs from '@emailjs/browser';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function Contact() {
   const [time, setTime] = useState(new Date().toLocaleTimeString());
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const form = useRef();
+
 
   const heading = useRef(null)
   const body = useRef(null)
   const contactSection = useRef(null)
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm('service_baa92rb', 'template_m5zzikj', form.current, {
+        publicKey: 'td4T4XlWseHhgdB6V',
+      })
+      .then(
+        () => {
+          console.log('SUCCESS!');
+          setName('');
+          setEmail('');
+          setMessage('');
+
+          toast.success('Form Sent! 🎉', {
+            position: 'bottom-right',
+            autoClose: 3000, // Auto dismiss after 3 seconds
+            hideProgressBar: true,
+            pauseOnHover: true,
+          });
+        },
+        (error) => {
+          console.log('FAILED...', error.text);
+        },
+      );
+  };
 
   useEffect(() => {
     ScrollTrigger.create({
@@ -53,11 +89,13 @@ export default function Contact() {
           </p>
           <form
             name="contact"
-            action="/contact"
+            ref={form} 
+            onSubmit={sendEmail}
+            // action="/contact"
             autoComplete="off"
             // eslint-disable-next-line react/no-unknown-property
             className="mt-10 font-grotesk"
-            method="POST" 
+            // method="POST" 
           >
             <input type="hidden" name="form-name" value="contact"/>
             <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2">
@@ -66,9 +104,11 @@ export default function Contact() {
                     required
                     type="text"
                     id="name"
-                    name="name"
+                    name="user_name"
                     className="peer block w-full appearance-none border-0 border-b border-accent-100 bg-transparent px-0 py-2.5 focus:outline-none focus:ring-0"
                     placeholder=" "
+                    value={name} // Bind the 'name' state to the textarea value
+                    onChange={(e) => setName(e.target.value)} // Update the 'name' state on textarea change
                   />
                 <label
                   htmlFor="name"
@@ -81,10 +121,12 @@ export default function Contact() {
                 <input
                   required
                   type="text"
-                  name="email"
+                  name="user_email"
                   id="email"
                   className="peer block w-full appearance-none border-0 border-b border-accent-100 bg-transparent px-0 py-2.5 focus:outline-none focus:ring-0"
                   placeholder=" "
+                  value={email} // Bind the 'email' state to the input value
+                  onChange={(e) => setEmail(e.target.value)} // Update the 'email' state on input change
                 />
                 <label
                   htmlFor="email"
@@ -101,6 +143,8 @@ export default function Contact() {
                   rows="5"
                   className="peer block w-full appearance-none border-0 border-b border-accent-100 bg-transparent px-0 py-2.5 focus:outline-none focus:ring-0"
                   placeholder=" "
+                  value={message} // Bind the 'message' state to the textarea value
+                  onChange={(e) => setMessage(e.target.value)} // Update the 'message' state on textarea change
                 ></textarea>
                 <label
                   htmlFor="message"
@@ -193,6 +237,9 @@ export default function Contact() {
           </div>
         </div>
       </div>
+
+      <ToastContainer />
+      
     </section>
   );
 }
