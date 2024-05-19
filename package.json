@@ -13,7 +13,6 @@
     "@emailjs/browser": "^4.3.3",
     "@studio-freight/lenis": "^1.0.13",
     "@vercel/analytics": "^1.2.2",
-    "@vercel/speed-insights": "^1.0.10",
     "gsap": "^3.11.5",
     "next": "^14.2.3",
     "react": "^18.2.0",
