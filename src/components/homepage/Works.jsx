@@ -58,7 +58,7 @@ export default function Works({ forwardedRef }) {
         {/* Project #4 */}
         <div className="col-span-1 h-fit pt-0 md:col-span-8 md:pt-20">
           <Projects
-            link="https://www.figma.com/design/ZaFXqIQ6hRVlw0tFTFcLzW/Daily-UI-UX?node-id=11-1940"
+            link="https://www.figma.com/design/wdgOdwsoCpGa5poalsusJD/Ticked-Case-Study?node-id=0-1&t=d1uE9uEhLTZ1jgTS-1"
             img={ticked}
             alt="ticked project ui"
             name="Ticked | Accountability App"
